@@ -24,7 +24,7 @@ import os
 class conf:
     data_cache_path = "/data_cache"
     logger_level = os.getenv("LOGGER_LEVEL", "info")
-    worker_instance = os.getenv("WORKER_INSTANCE")
+    worker_instance = os.getenv("DEP_INSTANCE")
     job_callback_url = os.getenv("JOB_CALLBACK_URL")
     input_file = os.getenv("source_table")
     column = os.getenv("column")
