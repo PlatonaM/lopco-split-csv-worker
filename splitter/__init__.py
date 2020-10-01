@@ -26,15 +26,19 @@ def splitFile(path, source, column):
     key = None
     with open(os.path.join(path, source), "r") as file:
         first_line = file.readline()
-        pos = first_line.split(conf.delimiter).index(column)
+        first_line = first_line.split(conf.delimiter)
+        pos = first_line.index(column)
+        first_line.remove(column)
         for line in file:
+            line = line.split(conf.delimiter)
             if not key or key not in line:
-                key = line.split(conf.delimiter)[pos]
+                key = line[pos]
                 key_file_map[key] = uuid.uuid4().hex
                 if out_file:
                     out_file.close()
                 out_path = os.path.join(path, key_file_map[key])
                 out_file = open(out_path, "a+")
-                out_file.write(first_line)
-            out_file.write(line)
+                out_file.write(conf.delimiter.join(first_line))
+            line.remove(key)
+            out_file.write(conf.delimiter.join(line))
     return key_file_map
