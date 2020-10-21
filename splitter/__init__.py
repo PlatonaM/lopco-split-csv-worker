@@ -15,6 +15,9 @@
 """
 
 
+__all__ = ("splitFile", )
+
+
 from .configuration import conf
 import os
 import uuid
