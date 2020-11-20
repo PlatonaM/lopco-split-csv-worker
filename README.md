@@ -1,10 +1,14 @@
 #### Description
 
     {
-        "name": "Split on unique",
-        "description": null,
-        "image": "split-on-unique-worker",
+        "name": "Split CSV",
+        "image": "platonam/lopco-split-csv-worker:dev",
         "data_cache_path": "/data_cache",
+        "description": "Split a Comma-Separated Values file into multiple unique files.",
+        "configs": {
+            "column": null,
+            "delimiter": null
+        },
         "input": {
             "type": "single",
             "fields": [
@@ -27,11 +31,12 @@
                     "name": "result_table",
                     "media_type": "text/csv",
                     "is_file": true
+                },
+                {
+                    "name": "line_count",
+                    "media_type": "text/plain",
+                    "is_file": false
                 }
             ]
-        },
-        "configs": {
-            "column": null,
-            "delimiter": null
         }
     }
