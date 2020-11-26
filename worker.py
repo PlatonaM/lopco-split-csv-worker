@@ -17,13 +17,24 @@
 from splitter.configuration import conf
 from splitter import splitFile
 import requests
+import os
 
 
 file_map = splitFile(conf.data_cache_path, conf.input_file, conf.column)
 
-resp = requests.post(
-    conf.job_callback_url,
-    json={
-        conf.worker_instance: [{"unique_id": key, "result_table": value[0], "line_count": value[1]} for key, value in file_map.items()]
-    }
-)
+try:
+    resp = requests.post(
+        conf.job_callback_url,
+        json={
+            conf.worker_instance: [{"unique_id": key, "result_table": value[0], "line_count": value[1]} for key, value in file_map.items()]
+        }
+    )
+    if not resp.ok:
+        raise RuntimeError(resp.status_code)
+except Exception as ex:
+    for value in file_map.values():
+        try:
+            os.remove(os.path.join(conf.data_cache_path, value[0]))
+        except Exception:
+            pass
+    raise ex
