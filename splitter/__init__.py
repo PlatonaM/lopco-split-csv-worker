@@ -49,4 +49,5 @@ def splitFile(path, source, column):
             out_file.write(conf.delimiter.join(line))
             line_count += 1
         key_file_map[key].append(str(line_count))
+        out_file.close()
     return key_file_map
