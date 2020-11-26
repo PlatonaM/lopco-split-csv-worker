@@ -23,10 +23,18 @@ import os
 import uuid
 
 
+def printResult(file_path, line_count):
+    with open(file_path, "r") as file:
+        for x in range(5):
+            print(file.readline().strip())
+    print("total number of lines written: {}".format(line_count))
+
+
 def splitFile(path, source, column):
     key_file_map = dict()
     out_file = None
     key = None
+    print("splitting ...")
     with open(os.path.join(path, source), "r") as file:
         first_line = file.readline()
         first_line = first_line.split(conf.delimiter)
@@ -39,8 +47,10 @@ def splitFile(path, source, column):
                 if out_file:
                     out_file.close()
                     key_file_map[key].append(str(line_count))
+                    printResult(out_path, line_count)
                     line_count = 0
                 key = line[pos]
+                print("{}:".format(key))
                 key_file_map[key] = [uuid.uuid4().hex]
                 out_path = os.path.join(path, key_file_map[key][0])
                 out_file = open(out_path, "a+")
@@ -49,5 +59,6 @@ def splitFile(path, source, column):
             out_file.write(conf.delimiter.join(line))
             line_count += 1
         key_file_map[key].append(str(line_count))
+        printResult(out_path, line_count)
         out_file.close()
     return key_file_map
