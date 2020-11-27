@@ -46,19 +46,17 @@ def splitFile(path, source, column):
             if not key or key not in line:
                 if out_file:
                     out_file.close()
-                    key_file_map[key].append(str(line_count))
                     printResult(out_path, line_count)
                     line_count = 0
                 key = line[pos]
                 print("{}:".format(key))
-                key_file_map[key] = [uuid.uuid4().hex]
-                out_path = os.path.join(path, key_file_map[key][0])
+                key_file_map[key] = uuid.uuid4().hex
+                out_path = os.path.join(path, key_file_map[key])
                 out_file = open(out_path, "a+")
                 out_file.write(conf.delimiter.join(first_line))
             line.remove(key)
             out_file.write(conf.delimiter.join(line))
             line_count += 1
-        key_file_map[key].append(str(line_count))
         printResult(out_path, line_count)
         out_file.close()
     return key_file_map
