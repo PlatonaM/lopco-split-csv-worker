@@ -26,7 +26,7 @@ try:
     resp = requests.post(
         conf.job_callback_url,
         json={
-            conf.worker_instance: [{"unique_id": key, "result_table": value[0], "line_count": value[1]} for key, value in file_map.items()]
+            conf.worker_instance: [{"unique_id": key, "result_table": value} for key, value in file_map.items()]
         }
     )
     if not resp.ok:
@@ -34,7 +34,7 @@ try:
 except Exception as ex:
     for value in file_map.values():
         try:
-            os.remove(os.path.join(conf.data_cache_path, value[0]))
+            os.remove(os.path.join(conf.data_cache_path, value))
         except Exception:
             pass
     raise ex
