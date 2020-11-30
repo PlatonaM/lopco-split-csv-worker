@@ -2,7 +2,7 @@
 
     {
         "name": "Split CSV",
-        "image": "platonam/lopco-split-csv-worker:dev",
+        "image": "platonam/lopco-split-csv-worker:latest",
         "data_cache_path": "/data_cache",
         "description": "Split a Comma-Separated Values file into multiple unique files.",
         "configs": {
