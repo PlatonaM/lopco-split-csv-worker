@@ -40,14 +40,14 @@ def splitFile(path, source, column):
         first_line = first_line.split(conf.delimiter)
         pos = first_line.index(column)
         first_line.remove(column)
-        line_count = 0
+        line_count = 1
         for line in file:
             line = line.split(conf.delimiter)
             if not key or key not in line:
                 if out_file:
                     out_file.close()
                     printResult(out_path, line_count)
-                    line_count = 0
+                    line_count = 1
                 key = line[pos]
                 print("{}:".format(key))
                 key_file_map[key] = uuid.uuid4().hex
